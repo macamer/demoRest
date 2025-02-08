@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" th:href="@{./css/style.css}" />
+	<title>Mantenimiento de clientes</title>
+</head>
+
+<body>
+	<div>
+		<br>
+		<h2 th:if="${listaClientesDTO.isEmpty()}">No hay clientes</h2>
+		<div th:if="${!listaClientesDTO.isEmpty()}">
+			<h2>Mantenimiento de Clientes</h2>
+			<table>
+				<thead>
+					<tr>
+						<th>id</th>
+						<th>Nombre</th>
+						<th>Apellidos</th>
+						<th>NIF</td>
+						<th>Correo electrónico</th>
+						<th>Fecha nacimiento</th>
+						<th>Editar</th>
+						<th>Eliminar</th>
+						<th>Cuentas</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="item:${listaClientesDTO}">
+						<td><a th:href="@{/clientes/{idCliente}(idCliente=${item.id})}" th:text="${item.id}" class="id"/></td>
+						<td th:text="${item.nombre}" />
+						<td th:text="${item.apellidos}" />
+						<td th:text="${item.nif}" />
+						<td th:text="${item.email}" />
+						<td th:text="${#dates.format(item.fechaNacimiento, 'dd/MM/yyyy')}"/>
+						<td>
+							<a th:href="@{/clientes/update/{idCliente}(idCliente=${item.id})}" class="edit">
+								Editar</a>
+						</td>
+						<td>
+							<a th:href="@{/clientes/delete/{idCliente}(idCliente=${item.id})}" class="delete">
+								Eliminar</a>
+						</td>
+						<td>
+							<a th:href="@{/clientes/{idCliente}/cuentas(idCliente=${item.id})}" class="edit">
+								Cuentas</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<br>
+	<div>
+		<a th:href="@{/clientes/add}" class="add">Agregar</a>
+		<br>
+		<a th:href="@{/}" class="back">Volver al inicio</a>
+	</div>
+</body>
+
+</html>
